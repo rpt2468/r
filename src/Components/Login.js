@@ -1,38 +1,57 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import "../SaSS/login.css";
 
-function Login() {
+const Login = () => {
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password: "",
+  });
 
-    const [userName, setuserName] = useState('')
-    const [password, setPassword] = useState('')
+  const handleChange = (event) => {
+    console.log("changing event", event.target.value, event.target.id);
+    //Here we initializing LoginInfo state with an object that already contains properties.
+    // setFullname((prevalue) => {
+    //     return {
+    //       ...prevalue,   // Spread Operator
+    //       [name]: value
+    //     }
+    setLoginInfo({...loginInfo, [event.target.id]: event.target.value });
+    //console.log(loginInfo);
+  };
 
-    const handleUserNameChange = (event) =>{
-        setuserName(event.target.value);
-        console.log("Name changed to " , {userName});
-    }
-      
-    const handlePasswordChange = (event) =>{
-        setPassword(event.target.value);
-        console.log("Password changed to " , {password});
-    }
-    const handleSubmit =(event) => {
-
-        console.log("Form submitted")
-        event.preventDefault();
-    }
+  const handleSubmit = (event) => {
+    console.log("Form submitted", loginInfo);
+    event.preventDefault();
+  };
   return (
-      <div className="center-item">
-          
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="username" placeholder="Enter username" value={userName} onChange={handleUserNameChange} />
-          <input type="password" name="password" placeholder="Enter password"  value={password} onChange={handlePasswordChange}  />
-          <button type="submit" >Login</button>
-          <p>
-            Not Registered ?<a href="#">Create account Now!</a>
-          </p>
-        </form>
-      </div>
+    <div className="center-item">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username"
+          value={loginInfo.username}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter password"
+          value={loginInfo.password}
+          onChange={handleChange}
+        />
+        <button
+          type="submit"
+          // disabled={!loginInfo.username || !loginInfo.password}
+        >
+          Login
+        </button>
+        <p>
+          Not Registered ?<a href="#">Create account Now!</a>
+        </p>
+      </form>
+    </div>
   );
-}
+};
 
 export default Login;
